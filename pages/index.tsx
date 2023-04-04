@@ -6,8 +6,11 @@ export default function Home() {
   const { login, logout } = usePrivy();
   const { ready, authenticated, user } = usePrivy();
   const { data: wagmiSigner } = useSigner();
-  const { address: wagmiAddress, connector } = useAccount();
+  const { address: wagmiAddress } = useAccount();
+
+  // Importing this fixes useSigner.
   const { switchNetwork } = useSwitchNetwork();
+
   const [address, setAddress] = useState<any | undefined>(undefined);
   const [signer, setSigner] = useState<any | undefined>(undefined);
 
@@ -18,7 +21,6 @@ export default function Home() {
       user,
       ready,
       authenticated,
-      connector,
     });
     if (ready && authenticated) {
       setSigner(wagmiSigner);
@@ -27,7 +29,7 @@ export default function Home() {
       setSigner(undefined);
       setAddress(undefined);
     }
-  }, [ready, user, authenticated, wagmiSigner, wagmiAddress, connector]);
+  }, [ready, user, authenticated, wagmiSigner, wagmiAddress]);
 
   return (
     <>
